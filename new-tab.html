@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Editor</title>
+    <script type="text/javascript" src="editor.js"></script>
+    <style>
+        .editor {
+            display: inline-block;
+            vertical-align: top;
+            font: 15px monospace;
+            max-width: 60rem;
+            
+            padding: 4rem;
+            border: 0;
+            outline: 0px solid transparent;
+            text-align: left;
+            box-sizing:border-box;
+            white-space: pre-wrap;
+        }
+        #editor{
+            width:30%
+        }
+
+        #scratchpad{
+            margin: 0 auto;
+            width:70%;
+            
+        }
+
+        .container{
+            /* text-align: center; */
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div id="editor" class="editor" contenteditable="true" spellcheck="false"></div><div id="scratchpad" class="editor" contenteditable="true" spellcheck="false"></div>
+    </div>
+</body>
+
+</html>

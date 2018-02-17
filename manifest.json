@@ -1,0 +1,10 @@
+{
+  "name": "Plume",
+  "description": "Overrides the new tab page and provide a persistent notepad and Todo list",
+  "version": "0.1",
+  "incognito": "spanning",
+  "chrome_url_overrides": {
+    "newtab": "new-tab.html"
+  },
+  "manifest_version": 2
+}
