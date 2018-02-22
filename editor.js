@@ -14,6 +14,8 @@ function Editor(htmlelement, localStorageKey) {
         this.data.content = this.htmlElement.innerHTML;
         this.data.edited = (new Date()).getTime();
         localStorage.setItem(localStorageKey, JSON.stringify(this.data));
+
+        console.log(this.data.content);
     }
 
     this.htmlElement.addEventListener('keydown', function (e) {
@@ -25,9 +27,23 @@ function Editor(htmlelement, localStorageKey) {
             //prevent focusing on next element
                
         }
-        this.save();
+        
     }.bind(this));
 
+    this.htmlElement.addEventListener('keyup',function(e){
+        this.save();
+
+    }.bind(this));
+
+    document.addEventListener("visibilitychange",function(e){
+        if(!document.hidden){
+            //reload text if tab is becoming visible
+            this.data = JSON.parse(localStorage.getItem(localStorageKey));
+            this.htmlElement.innerHTML = this.data.content;
+            console.log("in");
+        }
+    }.bind(this));
+    
     this.htmlElement.innerHTML = this.data.content;
     this.htmlElement.focus();
 }
