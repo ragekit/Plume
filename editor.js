@@ -21,7 +21,7 @@ function Editor(htmlelement, localStorageKey) {
 
        //console.log(this.data.content);
             if (!this.data) {
-                this.data = { edited: (new Date()).getTime(), content: '' };
+                this.data = { edited: (new Date()).getTime(), content: 'Write Here' };
             }
             this.htmlElement.innerHTML = this.data.content;
     }
