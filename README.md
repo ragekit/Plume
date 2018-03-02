@@ -1,3 +1,3 @@
 # Plume
 
-Plume is a home page that provides a very simple notepad/scratchpad.
+Plume is a simple page that provides a very simple notepad/scratchpad.
