@@ -1,3 +1,5 @@
+var browser = browser || chrome;
+
 document.addEventListener("DOMContentLoaded", function (event) {
     var ed1 = new Editor(document.getElementById("editor"),"data");
     var ed2 = new Editor(document.getElementById("scratchpad"),"notes");
@@ -5,21 +7,27 @@ document.addEventListener("DOMContentLoaded", function (event) {
 
 
 function Editor(htmlelement, localStorageKey) {
+   
     this.htmlElement = htmlelement;
-    this.data = JSON.parse(localStorage.getItem(localStorageKey));
-    if (!this.data) {
-        this.data = { edited: (new Date()).getTime(), content: '' };
-    }
+    this.localStorageKey = localStorageKey;
+    this.data = {};
     this.save = function () {
         this.data.content = this.htmlElement.innerHTML;
         this.data.edited = (new Date()).getTime();
-        localStorage.setItem(localStorageKey, JSON.stringify(this.data));
+        localStorage.setItem(this.localStorageKey,JSON.stringify(this.data));
+    }
+    this.load = function(){
+       this.data = JSON.parse(localStorage.getItem(this.localStorageKey));
 
-        console.log(this.data.content);
+       //console.log(this.data.content);
+            if (!this.data) {
+                this.data = { edited: (new Date()).getTime(), content: '' };
+            }
+            this.htmlElement.innerHTML = this.data.content;
     }
 
     this.htmlElement.addEventListener('keydown', function (e) {
-        console.log(e);
+        //console.log(e);
         if(e.keyCode == 9){
             e.preventDefault()
             //add tab
@@ -38,13 +46,14 @@ function Editor(htmlelement, localStorageKey) {
     document.addEventListener("visibilitychange",function(e){
         if(!document.hidden){
             //reload text if tab is becoming visible
-            this.data = JSON.parse(localStorage.getItem(localStorageKey));
-            this.htmlElement.innerHTML = this.data.content;
-            console.log("in");
+            this.load();
         }
     }.bind(this));
+
     
-    this.htmlElement.innerHTML = this.data.content;
+    this.load();
+    
+    
     this.htmlElement.focus();
 }
 
