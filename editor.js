@@ -27,6 +27,7 @@ class Editor {
                 document.execCommand('insertHTML', false, '&#009');
                 //prevent focusing on next element       
             }
+            
 
         }.bind(this));
 
@@ -41,18 +42,18 @@ class Editor {
     }
 
     format() {
-        console.log(this.htmlElement.textContent);
-        this.lines = this.htmlElement.innerHTML.split("\n");
-        
-        console.log(this.lines);
-        for (let index = 0; index < this.lines.length; index++) {
-            let line = this.lines[index];
+       let selection = document.getSelection();
 
-            line = "<p>" + line + "</p>";
-            this.lines[index] = line;
-        }
-        console.log(this.lines);
-        this.htmlElement.innerHTML = this.lines;
+       console.log(/^([#]+ )/.exec(selection.anchorNode.textContent));
+       let titleRegexResult = /^([#]+ )/.exec(selection.anchorNode.textContent)
+       if(titleRegexResult !=null){
+           console.log(titleRegexResult[0].length-1);
+           console.log(`h${titleRegexResult[0].length-1}`);
+           document.execCommand("formatBlock",false,`h${titleRegexResult[0].length-1}`);
+
+       }else {
+            document.execCommand("formatBlock",false,"p");
+       }
     }
 
 
