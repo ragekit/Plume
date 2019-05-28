@@ -18,6 +18,7 @@ class Editor {
     month;
     moment;
     lastupdateTime;
+    timer;
     constructor(htmlelement){
 
         this.htmlElement = htmlelement;
@@ -34,10 +35,17 @@ class Editor {
     }
 
     save() {
-        let saveData  = document.getElementById("current").innerHTML;
-        if(saveData == "") return;
-        fullData[this.year][this.month][this.day][this.moment] = saveData;
-        fs.writeFile(savepath, JSON.stringify(fullData,null,'\t'),"utf8");
+
+        if(this.timer) clearTimeout(this.timer);
+        
+        this.timer = setTimeout(()=>{
+            let saveData  = document.getElementById("current").innerHTML;
+            if(saveData == "") return;
+            fullData[this.year][this.month][this.day][this.moment] = saveData;
+            fs.writeFile(savepath, JSON.stringify(fullData,null,'\t'),"utf8");
+        },1000);
+
+       
     }
     
     prepareData(data){
