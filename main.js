@@ -16,17 +16,17 @@ function createWindow () {
   })
 
   // and load the index.html of the app.
-
+  function PrompDataPath(){
+    const file = dialog.showOpenDialog({
+      title: 'Select Folder To save your Diary',
+      properties : ['openDirectory']
+    })
+    var data = {dataPath : file + "/Plume.json"};
+    return fs.writeFile(userDataPath+"/config.json",JSON.stringify(data),"utf8");
+  }
 
   const userDataPath = app.getPath('userData');
-  fs.readFile(userDataPath+"/config.json").catch(()=>{
-    const file = dialog.showSaveDialog({
-      title: 'Where to Save ?',
-    })
-    var data = {dataPath : file};
-    return fs.writeFile(userDataPath+"/config.json",JSON.stringify(data),"utf8");
-
-  }).then(()=>{
+  fs.readFile(userDataPath+"/config.json").catch(PrompDataPath).then(()=>{
     mainWindow.loadFile('index.html')
    // mainWindow.webContents.openDevTools()
 
