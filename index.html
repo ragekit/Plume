@@ -5,6 +5,11 @@
     <title>Plume</title>
     <script type="text/javascript" src="editor.js"></script>
     <style>
+
+        body::-webkit-scrollbar {
+            width: 0px;  /* Remove scrollbar space */
+                background: transparent;
+        }
         .editor {
             display: inline-block;
             vertical-align: top;
@@ -17,7 +22,8 @@
             white-space: pre-wrap;
         }
         #history{
-            width:30%
+            width:30%;
+            position:fixed;
         }
 
         .entry {
@@ -34,7 +40,7 @@
         #scratchpad{
             margin: 0 auto;
             width:70%;
-            
+            float:right;
         }
         
         .momentTitle {

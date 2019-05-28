@@ -92,7 +92,11 @@ class Editor {
             currentEditable.id = "";
         }
 
-
+        var momentDiv = document.createElement("div");
+            var momentDate = new Date(parseInt(this.moment,10));
+            momentDiv.innerHTML = String(momentDate.getHours()).padStart(2,"0")+ ":" + String(momentDate.getMinutes()).padStart(2,"0");
+            momentDiv.className = "momentTitle";
+            this.htmlElement.append(momentDiv);
 
         var diveditable = document.createElement("div");
         diveditable.contentEditable = "true";
@@ -134,6 +138,7 @@ class Editor {
             momentDiv.innerHTML = String(momentDate.getHours()).padStart(2,"0")+ ":" + String(momentDate.getMinutes()).padStart(2,"0");
             momentDiv.className = "momentTitle";
             this.htmlElement.append(momentDiv);
+            
             var div = document.createElement("div");
             div.innerHTML = o[1];
             div.id = o[0];
