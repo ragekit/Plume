@@ -18,8 +18,12 @@
             box-sizing:border-box;
             white-space: pre-wrap;
         }
-        #editor{
+        #history{
             width:30%
+        }
+
+        .entry {
+            margin-bottom: 20px;
         }
 
         #scratchpad{
@@ -32,9 +36,9 @@
 </head>
 
 <body>
+
     <div class="container">
-       <!-- <div id="editor" class="editor" contenteditable="true" spellcheck="false"></div> -->
-        <div id="scratchpad" class="editor" spellcheck="false"></div>
+        <div id="history" class="editor"></div><div id="scratchpad" class="editor" spellcheck="false"></div>
     </div>
     <script type="text/javascript" src="./renderer.js"></script>
 </body>

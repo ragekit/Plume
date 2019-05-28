@@ -1,6 +1,6 @@
 {
-  "name": "dazzling-queen-search",
-  "productName": "dazzling-queen-search",
+  "name": "plume",
+  "productName": "ragekit.plume",
   "description": "My Electron application description",
   "keywords": [],
   "main": "./main.js",
@@ -26,23 +26,9 @@
     "forge": {
       "packagerConfig": {},
       "makers": [
-        {
-          "name": "@electron-forge/maker-squirrel"
-        },
-        {
-          "name": "@electron-forge/maker-zip",
-          "platforms": [
-            "darwin"
-          ]
-        },
-        {
-          "name": "@electron-forge/maker-deb",
-          "config": {}
-        },
-        {
-          "name": "@electron-forge/maker-rpm",
-          "config": {}
-        }
+       {
+         "name":"@electron-forge/maker-zip"
+       }
       ]
     }
   }

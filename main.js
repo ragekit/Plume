@@ -1,26 +1,37 @@
 // Modules to control application life and create native browser window
-const {app, BrowserWindow} = require('electron')
-
+const {app, BrowserWindow,dialog} = require('electron')
+const fs = require("fs").promises;
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
-let mainWindow
 
 function createWindow () {
   // Create the browser window.
   mainWindow = new BrowserWindow({
-    width: 800,
+    width: 900,
     height: 600,
-    //frame : false,
+    frame : false,
     webPreferences: {
       nodeIntegration: true
     }
   })
 
   // and load the index.html of the app.
-  mainWindow.loadFile('index.html')
 
+
+  const userDataPath = app.getPath('userData');
+  fs.readFile(userDataPath+"/config.json").catch(()=>{
+    const file = dialog.showSaveDialog({
+      title: 'Where to Save ?',
+    })
+    var data = {dataPath : file};
+    return fs.writeFile(userDataPath+"/config.json",JSON.stringify(data),"utf8");
+
+  }).then(()=>{
+    mainWindow.loadFile('index.html')
+   // mainWindow.webContents.openDevTools()
+
+  });
   // Open the DevTools.
-  mainWindow.webContents.openDevTools()
 
 
 
