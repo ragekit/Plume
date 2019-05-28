@@ -7,7 +7,7 @@ const fs = require("fs").promises;
 function createWindow () {
   // Create the browser window.
   mainWindow = new BrowserWindow({
-    width: 900,
+    width: 1200,
     height: 600,
     frame : false,
     webPreferences: {
@@ -28,7 +28,7 @@ function createWindow () {
   const userDataPath = app.getPath('userData');
   fs.readFile(userDataPath+"/config.json").catch(PrompDataPath).then(()=>{
     mainWindow.loadFile('index.html')
-   // mainWindow.webContents.openDevTools()
+  //  mainWindow.webContents.openDevTools()
 
   });
   // Open the DevTools.

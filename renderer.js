@@ -8,6 +8,7 @@ const datapath = (electron.app || electron.remote.app).getPath('desktop');
 const userDataPath = (electron.app || electron.remote.app).getPath('userData');
 
 
+
 class Editor {
     htmlElement;
     currentEditableDiv;
@@ -53,12 +54,13 @@ class Editor {
         
         console.log(mn)
         if(mn > updateMaxTime){
-            console.log("switchdiv");
-            this.createEditableDiv();
             this.moment = Date.now();
+            this.createEditableDiv();
         }
         this.lastupdateTime = Date.now();
     }
+
+
 
     updateData(clicked){
         console.log(this);
@@ -81,33 +83,52 @@ class Editor {
             currentEditable.contentEditable = "false";
             currentEditable.id = "";
         }
+
+
+
         var diveditable = document.createElement("div");
         diveditable.contentEditable = "true";
         diveditable.id = "current";
-        this.htmlElement.append(diveditable);        
-        diveditable.focus();
+        diveditable.className = "entry";
+        diveditable.innerHTML = this.data[this.moment] || "";
+        this.htmlElement.append(diveditable);
+       // diveditable.focus();
+        let range = document.createRange();//Create a range (a range is a like the selection but invisible)
+        range.selectNodeContents(diveditable);//Select the entire contents of the element with the range
+        range.collapse(false);//collapse the range to the end point. false means collapse to end rather than the start
+        let selection = window.getSelection();//get the selection object (allows you to change selection)
+        selection.removeAllRanges();//remove any selections already made
+        selection.addRange(range);//make the range you have just created the visible selection
     }
 
     initListeners(){
-        this.htmlElement.addEventListener('keydown', function (e) {
+        this.htmlElement.addEventListener('keydown', (e) =>{
             if(e.keyCode == 9){
                 e.preventDefault()
                 
                 document.execCommand('insertHTML', false, '&#009');
             }
             this.updateTime();
-        }.bind(this));
+        });
 
-        this.htmlElement.addEventListener('keyup',function(e){
+        this.htmlElement.addEventListener('keyup',(e)=>{
             this.save();
-        }.bind(this));
+        });
     }
     
     init(editable){
        
         for(let o of Object.entries(this.data)){
+            if(o[0]== this.moment) continue;
+
+            var momentDiv = document.createElement("div");
+            var momentDate = new Date(parseInt(o[0],10));
+            momentDiv.innerHTML = String(momentDate.getHours()).padStart(2,"0")+ ":" + String(momentDate.getMinutes()).padStart(2,"0");
+            momentDiv.className = "momentTitle";
+            this.htmlElement.append(momentDiv);
             var div = document.createElement("div");
             div.innerHTML = o[1];
+            div.id = o[0];
             div.className = "entry";
             this.htmlElement.append(div);
         }
@@ -166,7 +187,6 @@ class History extends EventTarget {
             for(let m of Object.entries(y[1])){
                 this.htmlElement.innerHTML += m[0] +"/\n";
                 for(let d of Object.entries(m[1])){
-                    console.log(y[1]);
                     var dayElement = new DayLink(d[0],y[0],m[0],d[0]);
                     this.htmlElement.append(dayElement.element);
                    // dayElement.onClick = this.onClick;
