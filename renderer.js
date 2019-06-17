@@ -158,7 +158,6 @@ class DayLink{
     month;
     day;
 
-    onClick;
     latest = false;
     constructor(text,year,month,day){
         this.element = document.createElement("span");
@@ -168,9 +167,6 @@ class DayLink{
         this.month = month;
         this.day = day;
         this.element.style.cursor = "pointer";
-        // this.element.addEventListener("click",()=>{
-        //    if(this.onClick) this.onClick(this);
-        // });
     }
 
 
@@ -180,10 +176,8 @@ class DayLink{
 class History extends EventTarget {
     data;
     htmlElement;
-    onClick;
-
     elements = [];
-
+    test;
     constructor(htmlElemt){
         super();
         
@@ -195,34 +189,34 @@ class History extends EventTarget {
     constructHtml(){
         let latest;
         for(let y of Object.entries(fullData)){
-            this.htmlElement.innerHTML += y[0]+"/\n";
+            this.htmlElement.append(y[0]+"/\n");
 
             for(let m of Object.entries(y[1])){
-                this.htmlElement.innerHTML += m[0] +"/\n";
+                this.htmlElement.append(m[0] +"/\n");
                 for(let d of Object.entries(m[1])){
                     var dayElement = new DayLink(d[0],y[0],m[0],d[0]);
-                    this.htmlElement.append(dayElement.element);
-                   // dayElement.onClick = this.onClick;
-                   this.elements.push(dayElement);
+                   this.htmlElement.appendChild(dayElement.element);
+                    this.elements.push(dayElement);
                     latest = dayElement;
                 }
+                this.htmlElement.append("\n");
             }
         }
+        
         latest.latest = true;
     }
     updateCallback(fun){
+        
         this.elements.forEach(d => {
-            d.element.addEventListener("click",(event)=>{ fun(d)});
-        });{
-            
-        }
+            d.element.addEventListener("click",()=>{ 
+                fun(d);
+            });
+
+        });
     }
 }
 
 let fullData;
-
-
-
 
 let savepath;
 
@@ -242,8 +236,11 @@ fs.readFile(userDataPath + "/config.json")
             fullData = data;
             let ed2 = new Editor(document.getElementById("scratchpad"));
             let history = new History(document.getElementById("history"));
-    
-            history.updateCallback((d)=>{ ed2.updateData(d) })
+            //console.log(history.elements[0].element)
+
+          //  history.elements[0].element.addEventListener("click",() => console.log("test"))
+            history.updateCallback((d)=>{
+                ed2.updateData(d) })
             
         });
     })

@@ -11,24 +11,40 @@
     "package": "electron-forge package",
     "make": "electron-forge make",
     "publish": "electron-forge publish",
-    "lint": "echo \"No linting configured\""
+    "lint": "echo \"No linting configured\"",
+    "build" : "build"
   },
   "dependencies": {},
   "devDependencies": {
-    "electron": "5.0.1",
     "@electron-forge/cli": "6.0.0-beta.34",
     "@electron-forge/maker-deb": "6.0.0-beta.34",
     "@electron-forge/maker-rpm": "6.0.0-beta.34",
     "@electron-forge/maker-squirrel": "6.0.0-beta.34",
-    "@electron-forge/maker-zip": "6.0.0-beta.34"
+    "@electron-forge/maker-zip": "6.0.0-beta.34",
+    "electron": "5.0.1",
+    "electron-builder": "^20.41.0"
+  },
+  "build": {
+    "appId": "ragekit.plume",
+    "productName": "Plume",
+    "win": {
+      "target": ["portable"]
+    },
+    "portable": {
+      "artifactName": "plume_portable.exe"
+  },
+  "directories": {
+    "output": "out",
+    "buildResources": "out/buildResources"
+  }
   },
   "config": {
     "forge": {
       "packagerConfig": {},
       "makers": [
-       {
-         "name":"@electron-forge/maker-zip"
-       }
+        {
+          "name": "@electron-forge/maker-zip"
+        }
       ]
     }
   }

@@ -3,12 +3,15 @@
 
 <head>
     <title>Plume</title>
-    <script type="text/javascript" src="editor.js"></script>
+    
     <style>
 
         body::-webkit-scrollbar {
             width: 0px;  /* Remove scrollbar space */
                 background: transparent;
+        }
+        body{
+            margin:0;
         }
         .editor {
             display: inline-block;
@@ -48,13 +51,18 @@
             clear:both;
             margin-left : -100px;
         }
-        
+        .drag{
+            -webkit-app-region: drag;
+            width:100vw;
+            height:15px;
+            background-color:#F5f5f5
+        }
 
     </style>
 </head>
 
 <body>
-
+    <div class="drag"></div>
     <div class="container">
         <div id="history" class="editor"></div><div id="scratchpad" class="editor" spellcheck="false"></div>
     </div>
