@@ -1,51 +1,24 @@
 {
   "name": "plume",
-  "productName": "ragekit.plume",
-  "description": "My Electron application description",
-  "keywords": [],
-  "main": "./main.js",
   "version": "1.0.0",
-  "author": "bgatt",
+  "description": "Plume personal diary",
+  "main": "app.js",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "express": "^4.17.1"
+  },
+  "devDependencies": {},
   "scripts": {
-    "start": "electron-forge start",
-    "package": "electron-forge package",
-    "make": "electron-forge make",
-    "publish": "electron-forge publish",
-    "lint": "echo \"No linting configured\"",
-    "build" : "build"
+    "test": "node app.js"
   },
-  "dependencies": {},
-  "devDependencies": {
-    "@electron-forge/cli": "6.0.0-beta.34",
-    "@electron-forge/maker-deb": "6.0.0-beta.34",
-    "@electron-forge/maker-rpm": "6.0.0-beta.34",
-    "@electron-forge/maker-squirrel": "6.0.0-beta.34",
-    "@electron-forge/maker-zip": "6.0.0-beta.34",
-    "electron": "5.0.1",
-    "electron-builder": "^20.41.0"
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ragekit/Plume.git"
   },
-  "build": {
-    "appId": "ragekit.plume",
-    "productName": "Plume",
-    "win": {
-      "target": ["portable"]
-    },
-    "portable": {
-      "artifactName": "plume_portable.exe"
+  "author": "ragekit",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ragekit/Plume/issues"
   },
-  "directories": {
-    "output": "out",
-    "buildResources": "out/buildResources"
-  }
-  },
-  "config": {
-    "forge": {
-      "packagerConfig": {},
-      "makers": [
-        {
-          "name": "@electron-forge/maker-zip"
-        }
-      ]
-    }
-  }
+  "homepage": "https://github.com/ragekit/Plume#readme"
 }

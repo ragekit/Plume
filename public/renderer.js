@@ -1,14 +1,3 @@
-
-const path = require('path');
-const fs = require('fs').promises;
-const electron = require('electron');
-
-const datapath = (electron.app || electron.remote.app).getPath('desktop');
-
-const userDataPath = (electron.app || electron.remote.app).getPath('userData');
-
-
-
 class Editor {
     htmlElement;
     currentEditableDiv;
@@ -41,8 +30,15 @@ class Editor {
         this.timer = setTimeout(()=>{
             let saveData  = document.getElementById("current").innerHTML;
             if(saveData == "") return;
-            fullData[this.year][this.month][this.day][this.moment] = saveData;
-            fs.writeFile(savepath, JSON.stringify(fullData,null,'\t'),"utf8");
+            let dto = {year : this.year, month:this.month, day : this.day, moment : this.moment, data : saveData};
+            fetch("/update", {
+                method: 'POST',
+                body: JSON.stringify(dto), // data can be `string` or {object}!
+                headers:{
+                  'Content-Type': 'application/json'
+            }
+        })
+         //   fs.writeFile(savepath, JSON.stringify(fullData,null,'\t'),"utf8");
         },1000);
 
        
@@ -173,13 +169,12 @@ class DayLink{
 
 }
 
-class History extends EventTarget {
+class DiaryHistory {
     data;
     htmlElement;
     elements = [];
     test;
     constructor(htmlElemt){
-        super();
         
         this.htmlElement = htmlElemt;
         this.constructHtml();
@@ -222,28 +217,42 @@ let savepath;
 
 const updateMaxTime = 1;
 
-fs.readFile(userDataPath + "/config.json")
-    .then(data => { 
-        savepath = JSON.parse(data).dataPath;
-    })
-    .then(()=>{
-        fs.readFile(savepath,"utf8")
-        .catch(err => {
-            return "{}";
-        })
-        .then(JSON.parse)
-        .then(data => {
-            fullData = data;
-            let ed2 = new Editor(document.getElementById("scratchpad"));
-            let history = new History(document.getElementById("history"));
-            //console.log(history.elements[0].element)
+// fetch("data/config.json")
+//     .then(data => { 
+//         savepath = JSON.parse(data).dataPath;
+//     })
+//     .then(()=>{
+//         fs.readFile(savepath,"utf8")
+//         .catch(err => {
+//             return "{}";
+//         })
+//         .then(JSON.parse)
+//         .then(data => {
+//             fullData = data;
+//             let ed2 = new Editor(document.getElementById("scratchpad"));
+//             let history = new DiaryHistory(document.getElementById("history"));
+//             //console.log(history.elements[0].element)
 
-          //  history.elements[0].element.addEventListener("click",() => console.log("test"))
-            history.updateCallback((d)=>{
-                ed2.updateData(d) })
+//           //  history.elements[0].element.addEventListener("click",() => console.log("test"))
+//             history.updateCallback((d)=>{
+//                 ed2.updateData(d) })
             
-        });
+//         });
+//     })
+
+
+
+fetch("data",{
+    credentials: 'include'  
+  })
+    .then(data => {return data.json()})
+    .then((json)=> {
+        fullData = json;
+        let ed2 = new Editor(document.getElementById("scratchpad"));
+        let history = new DiaryHistory(document.getElementById("history"));
+        //console.log(history.elements[0].element)
+
+        //  history.elements[0].element.addEventListener("click",() => console.log("test"))
+        history.updateCallback((d)=>{
+            ed2.updateData(d) })
     })
-
-
-
