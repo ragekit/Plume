@@ -81,6 +81,10 @@ class Editor {
 
     createEditableDiv(){
 
+        //CODE DUPLICATION HERE :(((((
+        var wrapper = document.createElement("div");
+        wrapper.className = "wrapper";
+
         var currentEditable = document.getElementById("current");
         if(currentEditable){
             if(currentEditable.innerHTML == "") return;
@@ -92,14 +96,16 @@ class Editor {
             var momentDate = new Date(parseInt(this.moment,10));
             momentDiv.innerHTML = String(momentDate.getHours()).padStart(2,"0")+ ":" + String(momentDate.getMinutes()).padStart(2,"0");
             momentDiv.className = "momentTitle";
-            this.htmlElement.append(momentDiv);
+            wrapper.append(momentDiv);
 
         var diveditable = document.createElement("div");
         diveditable.contentEditable = "true";
         diveditable.id = "current";
         diveditable.className = "entry";
         diveditable.innerHTML = this.data[this.moment] || "";
-        this.htmlElement.append(diveditable);
+        wrapper.append(diveditable);
+        this.htmlElement.append(wrapper);
+
        // diveditable.focus();
         let range = document.createRange();//Create a range (a range is a like the selection but invisible)
         range.selectNodeContents(diveditable);//Select the entire contents of the element with the range
@@ -129,17 +135,21 @@ class Editor {
         for(let o of Object.entries(this.data)){
             if(o[0]== this.moment) continue;
 
+            var wrapper = document.createElement("div");
+            wrapper.className = "wrapper";
+
             var momentDiv = document.createElement("div");
             var momentDate = new Date(parseInt(o[0],10));
             momentDiv.innerHTML = String(momentDate.getHours()).padStart(2,"0")+ ":" + String(momentDate.getMinutes()).padStart(2,"0");
             momentDiv.className = "momentTitle";
-            this.htmlElement.append(momentDiv);
+            wrapper.append(momentDiv);
             
             var div = document.createElement("div");
             div.innerHTML = o[1];
             div.id = o[0];
             div.className = "entry";
-            this.htmlElement.append(div);
+            wrapper.append(div);
+            this.htmlElement.append(wrapper);
         }
         if(editable){
             this.createEditableDiv();

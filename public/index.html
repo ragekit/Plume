@@ -18,22 +18,21 @@
             vertical-align: top;
             font: 15px monospace;
             
-            padding: 4rem;
             border: 0;
             text-align: left;
             box-sizing:border-box;
             white-space: pre-wrap;
         }
+        .container {
+            padding: 4rem;
+        }
+
         #history{
-            width:30%;
-            position:fixed;
-        }
-
-        .entry {
+            width:250px;
             margin-bottom: 20px;
-            max-width: 60rem;
-
         }
+
+     
 
         #current {
             outline: 0px solid transparent;
@@ -41,28 +40,28 @@
         }
 
         #scratchpad{
-            margin: 0 auto;
-            width:70%;
-            float:right;
+            min-width: 10em;
         }
         
         .momentTitle {
-            float : left;
-            clear:both;
-            margin-left : -100px;
+            display: inline-block;
+            vertical-align: top;
+            margin-right: 10px;
         }
-        .drag{
-            -webkit-app-region: drag;
-            width:100vw;
-            height:15px;
-            background-color:#F5f5f5
+        .entry {
+            display: inline-block;
         }
 
+        .wrapper {
+            margin-bottom: 20px;
+            max-width: 50rem;
+
+        }
+    
     </style>
 </head>
 
 <body>
-    <div class="drag"></div>
     <div class="container">
         <div id="history" class="editor"></div><div id="scratchpad" class="editor" spellcheck="false"></div>
     </div>
