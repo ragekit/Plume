@@ -8,11 +8,12 @@ class Editor {
     moment;
     lastupdateTime;
     timer;
+    updateDiv;
     constructor(htmlelement){
 
         this.htmlElement = htmlelement;
         let date = new Date();
-
+        this.updateDiv = document.getElementById("update");
         this.day = date.getDate();
         this.month = date.getMonth()+1;
         this.year = date.getFullYear();
@@ -37,6 +38,10 @@ class Editor {
                 headers:{
                   'Content-Type': 'application/json'
             }
+        }).then(res => {
+            if(res.ok){
+                this.updateDiv.className = "update-done";
+            }
         })
          //   fs.writeFile(savepath, JSON.stringify(fullData,null,'\t'),"utf8");
         },1000);
@@ -53,6 +58,9 @@ class Editor {
     }
 
     updateTime(){
+
+        this.updateDiv.className = "updating";
+
         var millis = Date.now() - this.lastupdateTime;
         var mn = millis / 60000.0;
         

@@ -61,6 +61,21 @@
             margin-bottom: 20px;
             white-space: wrap;
         }
+
+        #update {
+            width:10px;
+            height:10px;
+            position:fixed;
+            right: 3rem;
+            top: 4rem;
+        }
+
+        .update-done{
+            background-color:#777;
+        }
+        .updating{
+            background-color:#eee;
+        }
     
     </style>
 </head>
@@ -69,6 +84,9 @@
     <div class="container">
         <div id="history" class="editor"></div><div id="scratchpad" class="editor" spellcheck="false"></div>
     </div>
+    <div id="update" class="update-done"></div>
+    </div>
+    
     <script type="text/javascript" src="./renderer.js"></script>
 </body>
 

@@ -14,6 +14,7 @@ app.post("/update",jsonparser,(req,res)=>{
     fullData[dto.year][dto.month][dto.day][dto.moment] = dto.data;
 
     fs.writeFile(__dirname+"/data/plume.json", JSON.stringify(fullData,null,'\t'),"utf8");
+    res.send('updated');
 })
 
 app.get('/data',(req,res) =>{
