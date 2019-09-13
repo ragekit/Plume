@@ -18,7 +18,11 @@ app.post("/update",jsonparser,(req,res)=>{
 })
 
 app.get('/data',(req,res) =>{
-    res.sendFile(__dirname+"/data/plume.json")
+    fullData = fs.readFile(__dirname+"/data/plume.json")
+        .then((data) => {
+            fullData = data;
+            res.send(fullData)
+    });
 } );
 
 function prepareData(data,year,month,day){
@@ -26,15 +30,11 @@ function prepareData(data,year,month,day){
     data[year]= y = data[year] ? data[year] : {};
     y[month] = m = y[month] ? y[month] : {};
     m[day] = d = m[day] ? m[day] : {};
-    this.data = d;
 }
 
 let fullData;
-fs.readFile(__dirname+"/data/plume.json","utf8")
-.then((data,err) => fullData = JSON.parse(data))
-.then(()=>{
-    app.listen(port, () => console.log(`Plume listening on port ${port}!`))
-})
+app.listen(port, () => console.log(`Plume listening on port ${port}!`))
+
 
 
 
