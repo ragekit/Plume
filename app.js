@@ -18,9 +18,9 @@ app.post("/update",jsonparser,(req,res)=>{
 })
 
 app.get('/data',(req,res) =>{
-    fullData = fs.readFile(__dirname+"/data/plume.json")
-        .then((data) => {
-            fullData = data;
+    fullData = fs.readFile(__dirname+"/data/plume.json","utf8")
+        .then(data => {
+            fullData = JSON.parse(data);
             res.send(fullData)
     });
 } );
