@@ -3,10 +3,66 @@ const app = express()
 const port = 3000
 const bodyParser = require('body-parser')
 const fs = require("fs").promises;
+const session = require('express-session')
+
 let jsonparser = bodyParser.json();
+let urlencodedparser = bodyParser.urlencoded({extended:false});
+let harcorepassword = "putain";
+app.use(session({
+    secret :'asd;fojasdj;e',
+    resave:false,
+    saveUninitialized :false
+}))
+
+app.use(unless("/login",checkUser));
 app.use(express.static('public'));
 
-app.get('/', (req, res) => res.send("index.html"))
+
+function checkUser(req,res,next){
+    if(req.session.user){
+        next();
+    }else {
+       res.redirect("/login");
+    }
+  
+}
+function unless(path, middleware) {
+    
+    return function(req, res, next) {
+        if (path === req.path) {
+            return next();
+        } else {
+            return middleware(req, res, next);
+        }
+    };
+};
+
+
+app.get('/', (req, res) => {
+    if(req.session.user){
+        console.log("index");
+        res.sendFile(__dirname+"/app.html")
+
+   }else {
+       console.log("redirect");
+      res.redirect("/login");
+   }
+   
+});
+
+app.get("/login",(req,res)=>{
+   res.sendFile(__dirname+"/login.html");
+})
+
+app.post("/login",urlencodedparser,(req,res)=>{
+   if(req.body.password  == harcorepassword){
+       req.session.user = true;
+       res.redirect("/");
+       return;
+   }
+   res.redirect("/login");
+
+});
 
 app.post("/update",jsonparser,(req,res)=>{
     var dto = req.body;
